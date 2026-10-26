@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mapping the Headlines is a student-built guide to Jewish and Israeli news around the world.">
+  <title>Mapping the Headlines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-top">
+      <p class="publication-label">A STUDENT-LED NEWS PROJECT</p>
+      <p class="issue-label">WORLD / NEWS / CONTEXT</p>
+    </div>
+    <a class="wordmark" href="#" aria-label="Mapping the Headlines home">Mapping <span>the</span> Headlines</a>
+    <div class="masthead-bottom">
+      <p>Jewish and Israeli news, placed in a wider world.</p>
+      <p class="byline">Independent research · Sources matter</p>
+    </div>
+  </header>
+
+  <nav class="site-nav section-wrap" aria-label="Main navigation">
+    <a href="#map-title">Explore the map</a>
+    <a href="#stories-title">News desk</a>
+    <a href="#method-title">Our standards</a>
+  </nav>
+
+  <main>
+    <section class="intro section-wrap" aria-labelledby="intro-title">
+      <div class="intro-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> THE PROJECT</p>
+<h1 id="intro-title">News happens<br>somewhere. <em>Context</em><br>connects it.</h1>        <p class="intro-text">
+          From Israel to Jewish communities around the world, the headlines are connected by history, politics, and location. Mapping the Headlines brings those connections into view through sourced reporting and geographic context.
+        </p>
+        <p class="editor-note">
+          <span class="note-mark">*</span>
+          Follow the story, verify the source, and look past the headline.
+        </p>
+      </div>
+      <div class="intro-stamp" aria-label="Map, read, verify">
+        <span>MAP</span>
+        <span class="stamp-rule"></span>
+        <span>READ</span>
+        <span class="stamp-rule"></span>
+        <span>VERIFY</span>
+      </div>
+    </section>
+
+    <section class="map-section section-wrap" aria-labelledby="map-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 / THE WORLD VIEW</p>
+          <h2 id="map-title">The World in Context</h2>
+        </div>
+        <p class="section-aside">Select a marked location to read<br>the story and open its source.</p>
+      </div>
+
+      <div class="map-frame">
+        <div class="map-topline">
+          <span>WORLD MAP</span>
+          <span id="map-status">No stories plotted yet</span>
+        </div>
+        <div class="map-canvas">
+          <!-- A deliberately simple, editorial illustration. Markers are added from data.js. -->
+          
+<svg class="world-map" viewBox="0 0 900 440" role="img" aria-labelledby="world-map-title world-map-desc">
+  <title id="world-map-title">World map of reported stories</title>
+  <desc id="world-map-desc">A world map with country borders. Markers show the locations of verified stories.</desc>
+
+  <defs>
+    <pattern id="map-dots" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#c9c0d8"></circle>
+    </pattern>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="440" fill="url(#map-dots)" opacity=".28"></rect>
+
+  <g class="graticule">
+    <path d="M30 110 H870 M20 165 H880 M10 220 H890 M20 275 H880 M30 330 H870"></path>
+    <path d="M180 25 V415 M300 15 V425 M420 10 V430 M540 10 V430 M660 15 V425 M780 25 V415"></path>
+  </g>
+
+  <image href="world.svg"
+          x="10" y="0"
+          width="880" height="440"
+          preserveAspectRatio="none"
+          aria-hidden="ture"></image>
+  <g id="map-markers" aria-label="Story locations"></g>
+</svg>
+
+          <div class="map-empty" id="map-empty">
+            <span class="empty-symbol">+</span>
+            <p><strong>Your first story goes here.</strong><br>Add a verified story in <code>data.js</code> and its location will appear on the map.</p>
+          </div>
+        </div>
+        <div class="map-legend">
+          <span><i class="legend-dot"></i> Story location</span>
+          <span>Illustration is schematic, not for navigation.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stories-section section-wrap" aria-labelledby="stories-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">02 / THE READING DESK</p>
+          <h2 id="stories-title">What We're Tracking</h2>
+        </div>
+        <p class="section-aside">A small, sourced collection.<br>No unsourced headlines.</p>
+      </div>
+
+      <div class="story-tools">
+        <label class="search-label" for="story-search">Find a story
+          <input id="story-search" type="search" placeholder="Search place, topic, or headline">
+        </label>
+        <label class="topic-label" for="topic-filter">Topic
+          <select id="topic-filter">
+            <option value="all">All topics</option>
+          </select>
+        </label>
+        <button class="reset-button" id="reset-filters" type="button">Clear filters</button>
+      </div>
+
+      <div class="story-results-heading">
+        <p id="story-count" aria-live="polite">0 stories</p>
+        <p class="results-note">Stories are added after source checks.</p>
+      </div>
+      <div class="story-list" id="story-list">
+        <div class="empty-stories">
+          <p class="empty-stories-kicker">THE DESK IS OPEN</p>
+          <h3>No stories filed yet.</h3>
+          <p>This is intentional. Add a story only after checking the original reporting, date, location, and source link.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="method-section section-wrap" aria-labelledby="method-title">
+      <p class="eyebrow">03 / HOW THIS PROJECT WORKS</p>
+      <h2 id="method-title">A map is not a source.</h2>
+      <div class="method-grid">
+        <article>
+          <span class="method-number">01</span>
+          <h3>Find the reporting</h3>
+          <p>Use a credible news report or primary source, not a social post repeating a claim.</p>
+        </article>
+        <article>
+          <span class="method-number">02</span>
+          <h3>Check the details</h3>
+          <p>Confirm the date, location, who is making the claim, and what remains uncertain.</p>
+        </article>
+        <article>
+          <span class="method-number">03</span>
+          <h3>Give readers the source</h3>
+          <p>Summarize in your own words and link directly to the original article or document.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="footer-wordmark" href="#">Mapping the Headlines</a>
+    <p>A student-led project · Built for context, curiosity, and careful reading.</p>
+    <a href="#intro-title" class="back-to-top">Back to top ↑</a>
+  </footer>
+</body>
+</html>
