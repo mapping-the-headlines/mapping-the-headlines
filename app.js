@@ -379,3 +379,75 @@ resetButton.addEventListener("click", clearFilters);
 buildTopicFilter();
 renderStories();
 renderMapMarkers();
+
+async function loadLiveHeadlines() {
+  const feed = document.getElementById("headlines-feed");
+
+  if (!feed) return;
+
+  feed.replaceChildren();
+
+  const loading = document.createElement("p");
+  loading.className = "feed-note";
+  loading.textContent = "Loading recent headlines…";
+  feed.appendChild(loading);
+
+  try {
+    const rssUrl = "https://www.timesofisrael.com/feed/";
+    const apiUrl =
+      "https://api.rss2json.com/v1/api.json?rss_url=" +
+      encodeURIComponent(rssUrl);
+
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error("The feed service returned an error.");
+    }
+
+    const data = await response.json();
+
+    if (data.status !== "ok" || !Array.isArray(data.items)) {
+      throw new Error("The news feed could not be read.");
+    }
+
+    feed.replaceChildren();
+
+    data.items.slice(0, 8).forEach(item => {
+      if (!item.title || !isSafeHttpUrl(item.link)) return;
+
+      const article = document.createElement("article");
+      article.className = "headline-item";
+
+      const title = document.createElement("h3");
+      const link = document.createElement("a");
+      link.href = item.link;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = item.title;
+      title.appendChild(link);
+
+      const source = document.createElement("p");
+      source.className = "headline-source";
+      source.textContent = "The Times of Israel";
+
+      article.append(title, source);
+      feed.appendChild(article);
+    });
+
+    if (!feed.children.length) {
+      feed.textContent = "No headlines are available right now.";
+    }
+  } catch (error) {
+    feed.replaceChildren();
+
+    const message = document.createElement("p");
+    message.className = "feed-note";
+    message.textContent =
+      "Headlines are temporarily unavailable. Please try again later.";
+
+    feed.appendChild(message);
+    console.error("Live headlines error:", error);
+  }
+}
+
+loadLiveHeadlines();
